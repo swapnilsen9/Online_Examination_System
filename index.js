@@ -2,8 +2,12 @@ const express = require('express');
 const uuid = require('uuid');
 const credentials = require('./json/credentials.json');
 const fs = require('fs');
+const cors = require('cors');
 
 const app = express();
+
+//Init CORS
+app.use(cors());
 
 const PORT = 5000;
 

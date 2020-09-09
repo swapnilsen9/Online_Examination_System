@@ -5,7 +5,7 @@ let registerBtn = document.getElementById("registerBtn");
 
 async function getData()
 {
-	let response = await fetch("./credentials.json");
+	let response = await fetch("http://localhost:5000/api/credentials");
 	let credentials = await response.json();
 	return credentials;
 }
@@ -14,28 +14,30 @@ loginBtn.addEventListener('click', function(e){
 	e.preventDefault();
 	getData()
 		.then(function(credentials){
+		let userFound = false;
 		let details = {
-		"username" : loginForm.elements[0].value,
-		"password" : loginForm.elements[1].value
+		username : loginForm.elements[0].value,
+		password : loginForm.elements[1].value
 		};
-		if(details.username === credentials.username)
-		{
-			if(details.password === credentials.password)
+		for(let i=0; i<credentials.length; i++){
+			if(details.username === credentials[i].username)
 			{
-				alert("Authentication Successful");
-			}
-			else
-			{
-				alert("Incorrect Password");
+				userFound = true;
+				if(details.password === credentials[i].password)
+				{
+					alert("Authentication Successful");
+				}
+				else
+				{
+					alert("Incorrect Password");
+				}
 			}
 		}
-		else
-		{
-			alert("Incorrect Username");
-		}
+		if(userFound == false)
+			alert("User Not Found");
 	});
 });
 
 registerBtn.addEventListener('click', function(){
-	location.href="/register.html";
+	location.href="./register.html";
 });
