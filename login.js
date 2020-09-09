@@ -25,7 +25,10 @@ loginBtn.addEventListener('click', function(e){
 				userFound = true;
 				if(details.password === credentials[i].password)
 				{
-					alert("Authentication Successful");
+					if(credentials[i].type === 'Teacher')
+						location.href="./teacher.html";
+					else if(credentials[i].type === 'Student')
+						location.href="./student.html";
 				}
 				else
 				{

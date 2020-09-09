@@ -24,7 +24,10 @@ app.post('/api/credentials', (req, res) => {
     const newCred = {
         id : uuid.v4(),
         username : req.body.username,
-        password : req.body.password
+        password : req.body.password,
+        type : req.body.type,
+        security_question : req.body.security_question,
+        security_answer : req.body.security_answer
     };
 
     if(!newCred.username || !newCred.password)
