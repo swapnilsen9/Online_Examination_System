@@ -5,23 +5,51 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Teacher</title>
 	<link href="design.css" rel="stylesheet" type="text/css">
+	<script src="teacher.js" defer></script>
 </head>
 <body class="bg_img">
     <div class="main">
         <div>
             <header class="header_design"><b>Online Examination Management System</b></header>
         </div>
-        <div class="login_box login_box_hover">
-            <form id="loginForm" class="loginform_design">
-                <label>Username:</label><br>
-                <input type="text" name="username"><br><br>
-                <label>Password:</label><br>
-                <input type="password" name="password"><br><br>
-                <div style = "text-align: right;">
-                    <input type="submit" class="btn_design btn_click" id="login_btn" value="Login">
-                </div>
-              </form>
+        <div class="teacher_box teacher_box_hover">
+            <form id="teacherForm" class="teacherform_design">
+                <label for="subject">Subject</label>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+				<label>Question</label><br>
+				<select id="subject" name="subject" style="margin-top:4px ;width:140px; height: 26px; border-radius: 4px; border: none;font-family: eurofurence; font-size: 18px;">
+					<option>English</option>
+					<option>Maths</option>
+					<option>Computer Science</option>
+					<option>Physics</option>
+					<option>Chemistry</option>
+				</select>&emsp;&emsp;&emsp;
+				<input type="text" name="question" style="width: 580px"><br><br><br>
+				&emsp;&emsp;&emsp;&emsp;
+				<input type="radio" name="answer" id="option1" value="Option1">
+				<label>Option 1</label>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+			  	
+				<input type="radio" name="answer" id="option2" value="Option2">
+				<label>Option 2</label><br>
+				<input type="text" class="mt4" name="option1" style = "width: 250px;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+				<input type="text" class="mt4" name="option2" style = "width: 250px;"><br><br><br><br><br><br>
+				&emsp;&emsp;&emsp;&emsp;
+				<input type="radio" name="answer" id="option3" value="Option3"> 
+				<label>Option 3</label>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+				<input type="radio" name="answer" id="option4" value="Option4"> 
+				<label>Option 4</label><br>
+				<input type="text" class="mt4" name="option3" style = "width: 250px;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+				<input type="text" class="mt4" name="option4" style = "width: 250px;"><br><br><br>
+				<div style="text-align: right">
+					<input type="submit" class="btn_click btn_design" id="submitQuestions">
+				</div>
+            </form>
         </div>
+		<div class="btn_placement">
+			<button class="btn_click btn_design" id="logoutBtn">Log Out</button>
+			<button class="btn_click btn_design" id="resetBtn">Reset Fields</button>
+		</div>
     </div>
 </body>
 </html>

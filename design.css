@@ -109,3 +109,32 @@ input
 {
 	margin-top: 4px;
 }
+.teacher_box
+{
+	margin-top: 2%;
+	margin-left: auto;
+	margin-right: auto;
+	height: 400px;
+  	width: 70%;
+ 	border: 2px solid #3AA0FF;
+	border-radius: 10px;
+ 	padding: 30px;
+	display: block;
+    text-align: center;
+	background-color: saddlebrown;
+	transition: border 0.5s;
+	transition-timing-function: ease-in-out;
+}
+.teacher_box_hover:hover
+{
+	border: 2px solid #002CFF;
+	border-radius: 10px;
+}
+.teacherform_design
+{
+	padding-top: 20px;
+	display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
