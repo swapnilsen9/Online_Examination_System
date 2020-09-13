@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Student</title>
+	<link href="design.css" rel="stylesheet" type="text/css">
+	<script src="student.js" defer></script>
+</head>
+<body class="bg_img">
+    <div class="main">
+        <div>
+            <header class="header_design"><b>Online Examination Management System</b></header>
+        </div>
+        <div class="teacher_box teacher_box_hover">
+            <form id="studentForm" class="teacherform_design">
+                <label id="questionLabel">Question</label><br><br>
+                <label id="question">This is a test question?</label><br><br><br><br>
+                <input type="radio" name="answer" id="option1" value="Option1">
+                <label id="option1label">Option 1</label>
+                <input type="radio" name="answer" id="option2" value="Option2">
+                <label id="option2label">Option 2</label><br><br><br><br><br>
+                <input type="radio" name="answer" id="option3" value="Option3"> 
+                <label id="option3label">Option 3</label>
+                <input type="radio" name="answer" id="option4" value="Option4">
+                <label id="option4label">Option 4</label><br><br><br><br>
+				<div style="text-align: right">
+					<input type="submit" class="btn_click btn_design" id="submitAnswer">
+				</div>
+            </form>
+        </div>
+		<div style="text-align: center; margin-top: 1%;">
+			<button class="btn_click btn_design" id="resetBtn">Reset Fields</button>
+		</div>
+    </div>
+</body>
+</html>

@@ -2,6 +2,7 @@ const express = require('express');
 const uuid = require('uuid');
 const credentials = require('./json/credentials.json');
 const questions = require('./json/questions.json');
+const tempDetails = require('./json/tempDetails.json');
 const fs = require('fs');
 const cors = require('cors');
 
@@ -93,6 +94,38 @@ app.post('/api/questions', (req, res) => {
             });
         }
     });    
+});
+
+//Store Temp Details
+app.post('/api/tempdetailslogin', (req, res) => {
+    const tempDetails = {
+        username : req.body.username,
+        password : req.body.password
+    };
+    var newData = JSON.stringify(tempDetails);
+    fs.writeFile('./json/tempDetails.json', newData, 'utf-8', (err) => {
+        if(err) throw err
+        
+        res.json({msg : 'Temp Details Successfully Added', success : 'true'});
+    });  
+});
+
+//Get Temp Details
+app.get('/api/tempdetails', (req, res) => res.json(tempDetails));
+
+//Update Temp Details
+app.post('/api/tempdetailssubject', (req, res) => {
+    const tempDetails = {
+        username : req.body.username,
+        password : req.body.password,
+        subject : req.body.subject
+    };
+    var newData = JSON.stringify(tempDetails);
+    fs.writeFile('./json/tempDetails.json', newData, 'utf-8', (err) => {
+        if(err) throw err
+        
+        res.json({msg : 'Temp Details Successfully Updated', success : 'true'});
+    });  
 });
 
 app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));

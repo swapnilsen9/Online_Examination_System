@@ -2,6 +2,20 @@
 let loginBtn = document.getElementById("login_btn");
 let loginForm = document.getElementById("loginForm");
 let registerBtn = document.getElementById("registerBtn");
+let myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+async function postStudentData(details){
+    let requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: details,
+        redirect: 'follow'
+      };
+    let response = await fetch("http://localhost:5000/api/tempdetailslogin", requestOptions)
+    let tempStatus = await response.json();
+    return tempStatus;
+}
 
 async function getData()
 {
@@ -23,12 +37,20 @@ loginBtn.addEventListener('click', function(e){
 			if(details.username === credentials[i].username)
 			{
 				userFound = true;
-				if(details.password === credentials[i].password)
-				{
+				if(details.password === credentials[i].password){
 					if(credentials[i].type === 'Teacher')
 						location.href="./teacher.html";
-					else if(credentials[i].type === 'Student')
-						location.href="./student.html";
+					else if(credentials[i].type === 'Student'){
+						postStudentData(JSON.stringify(details)).
+							then((tempStatus) => {
+								if(tempStatus.success === 'true')
+									location.href="./subjectSelect.html";
+								else{
+									alert('Login Failed! Please Try Again');
+									loginForm.reset();
+								}
+							});
+					}		
 				}
 				else
 				{
