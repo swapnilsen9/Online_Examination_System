@@ -66,3 +66,5 @@ loginBtn.addEventListener('click', function(e){
 registerBtn.addEventListener('click', function(){
 	location.href="./register.html";
 });
+
+document.getElementById('results').addEventListener('click', () => location.href = './result.html');
