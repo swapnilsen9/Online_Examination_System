@@ -23,6 +23,13 @@ async function getData()
 	return tempDetails;
 }
 
+async function getResult()
+{
+	let response = await fetch("http://localhost:5000/api/result");
+	let resultDetails = await response.json();
+	return resultDetails;
+}
+
 async function getQuestions()
 {
 	let response = await fetch("http://localhost:5000/api/questions");
@@ -44,21 +51,40 @@ subjectBtn.addEventListener('click', (e) => {
                     break;
                 }
             }
-            if(quesExists === true){
+            if(quesExists === true){    
+                let exists = false;
                 getData().
                     then((tempDetails) => {
-                        let details = {
-                            username : tempDetails.username,
-                            password : tempDetails.password,
-                            subject : subjectForm.elements[0].value
-                        };
-                        postTempData(JSON.stringify(details)).
-                            then((tempStatus) => {
-                                if(tempStatus.success === 'true')
-                                    location.href = './student.html';
-                                else
-                                    alert('Something Happened! Please Try Again!');
-                            })
+                        getResult().
+                            then((resultDetails) => {
+                                let len = resultDetails.length;
+                                for(let i=0; i<len; i++){
+                                    if(resultDetails[i].username === tempDetails.username){
+                                        if(resultDetails[i].subject === subjectForm.elements[0].value){
+                                            exists = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if(exists === false){
+                                let details = {
+                                    username : tempDetails.username,
+                                    password : tempDetails.password,
+                                    subject : subjectForm.elements[0].value
+                                };
+                                postTempData(JSON.stringify(details)).
+                                    then((tempStatus) => {
+                                        if(tempStatus.success === 'true')
+                                            location.href = './student.html';
+                                        else
+                                            alert('Something Happened! Please Try Again!');
+                                    });
+                                }
+                                else if(exists === true){
+                                    alert("Test Already Completed! Select Another Subject or Log Out!");
+                                    subjectForm.reset();
+                                }
+                            });
                     });
             }
             else{

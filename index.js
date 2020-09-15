@@ -3,6 +3,7 @@ const uuid = require('uuid');
 const credentials = require('./json/credentials.json');
 const questions = require('./json/questions.json');
 const tempDetails = require('./json/tempDetails.json');
+const result = require('./json/result.json');
 const fs = require('fs');
 const cors = require('cors');
 
@@ -127,5 +128,38 @@ app.post('/api/tempdetailssubject', (req, res) => {
         res.json({msg : 'Temp Details Successfully Updated', success : 'true'});
     });  
 });
+
+//Get All Results
+app.get('/api/result', (req, res) => res.json(result));
+
+//Add New Result
+app.post('/api/result', (req, res) => {
+    var userObj;
+    const newResult = {
+        id : uuid.v4(),
+        username : req.body.username,
+        subject : req.body.subject,
+        score : req.body.score,
+        questionCount : req.body.questionCount
+    };
+
+    fs.readFile('./json/result.json', 'utf8', (err, data) => {
+        if(err){
+            console.log(err);
+            res.status(401).json({ success : 'false'});
+        }
+        else{
+            userObj = JSON.parse(data);
+            userObj.push(newResult);
+            var newData = JSON.stringify(userObj);
+            fs.writeFile('./json/result.json', newData, 'utf-8', (err) => {
+                if(err) throw err
+
+                res.json({msg : 'Results Successfully Updated', success : 'true'});
+            });
+        }
+    });    
+});
+
 
 app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
