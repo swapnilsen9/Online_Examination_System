@@ -9,11 +9,13 @@ let studentForm = document.getElementById('studentForm');
 let first = true;
 
 document.getElementById('resetBtn').addEventListener('click', () => studentForm.reset());
-let questionCounter = 1;
-let count = 0;
+let questionCounter = 0;
+let noOfQuestions = 0;
+let count = -1;
 let correctAnswer;
 let score1 = 0;
-let listOver = false;
+let questionIndexes = new Array();
+let questionIndexesLen;
 
 let myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
@@ -47,9 +49,8 @@ async function getData()
 function updateQuestion(i){
     getQuestions().
         then((questions) => {
-            let len = questions.length;
-            questionLabel.innerHTML = "Question " + questionCounter;
             questionCounter++;
+            questionLabel.innerHTML = "Question " + questionCounter;
             question.innerHTML = questions[i].question;
             option1label.innerHTML = questions[i].option1;
             option2label.innerHTML = questions[i].option2;
@@ -59,40 +60,34 @@ function updateQuestion(i){
         });
 }
 
-function countCalculator(){
-        if(first === true)
-            alert("After Pressing Ok The Test will Start Immediately. You Cannot Log Out Once The Test has Started!");
-        getData().
+function countNoOfQuestions(){
+    alert("After Pressing Ok The Test will Start Immediately. You Cannot Log Out Once The Test has Started!");
+    getData().
         then((tempDetails) => {
             let subject = tempDetails.subject;
             getQuestions().
                 then((questions) => {
-                    first = false;
                     let len = questions.length;
-                    if(count < len-1){
-                        for(let i=count; i<len; i++){
-                            if(questions[i].subject === subject){
-                                updateQuestion(i);
-                                break; 
-                            }
-                        }
-                        count++;
+                    for(let i=0; i<len; i++){
+                        if(questions[i].subject === subject)
+                            noOfQuestions++;
                     }
-                    else if(count === len-1){
-                        for(let i=count; i<len; i++){
-                            if(questions[i].subject === subject){
-                                updateQuestion(i);
-                                break; 
+                    for(let i=0; i<noOfQuestions; i++){
+                        for(let j=count+1; j<len; j++){
+                            if(questions[j].subject === subject){
+                                questionIndexes[i] = j;
+                                count = j;
+                                break;
                             }
                         }
-                        count++;
-                        listOver = true;
-                    }  
+                    }
+                    questionIndexesLen = questionIndexes.length;
+                    updateQuestion(questionIndexes[questionCounter]);
                 });
         });
 }
 
-countCalculator();
+countNoOfQuestions();
 
 submitAnswerBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -110,16 +105,17 @@ submitAnswerBtn.addEventListener('click', (e) => {
             studentForm.reset();
         }
         studentForm.reset();
-        if(listOver === false)
-            countCalculator();
-        else if(listOver === true){
+        console.log(questionCounter);
+        if(questionCounter < questionIndexesLen)
+            updateQuestion(questionIndexes[questionCounter]);
+        else if(questionCounter === questionIndexesLen){
             getData()
                 .then((tempDetails) => {
                     let resultData = {
                         username : tempDetails.username,
                         subject : tempDetails.subject,
                         score : score1,
-                        questionCount : count
+                        questionCount : questionCounter
                     }
                     postResult(JSON.stringify(resultData)).
                                 then((resultStatus) => {
