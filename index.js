@@ -161,5 +161,28 @@ app.post('/api/result', (req, res) => {
     });    
 });
 
+//Clear Questions
+app.get('/api/clearquestions', (req, res) => {
+    const cleardata = {
+    };
+    var newData = JSON.stringify(cleardata);
+    fs.writeFile('./json/questions.json', newData, 'utf-8', (err) => {
+        if(err) throw err
+        
+        res.json({msg : 'Questions Cleared Successfully', success : 'true'});
+    });  
+});
+
+//Clear Results
+app.get('/api/clearresults', (req, res) => {
+    const cleardata = {
+    };
+    var newData = JSON.stringify(cleardata);
+    fs.writeFile('./json/result.json', newData, 'utf-8', (err) => {
+        if(err) throw err
+        
+        res.json({msg : 'Results Cleared Successfully', success : 'true'});
+    });  
+});
 
 app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
