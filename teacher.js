@@ -59,3 +59,7 @@ logoutBtn.addEventListener('click', () => {
 resetBtn.addEventListener('click', () => {
     teacherForm.reset();
 })
+
+document.getElementById('clear').addEventListener('click', () => {
+    location.href = './clear.html';
+});
