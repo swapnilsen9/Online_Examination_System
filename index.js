@@ -9,10 +9,25 @@ const cors = require('cors');
 
 const app = express();
 
+function normalizePort(val) {
+    var port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        return val;
+    }
+
+    if(port >= 0) {
+        return port;
+    }
+
+    return false;
+}
+
 //Init CORS
 app.use(cors());
 
-const PORT = 5000;
+var port = normalizePort(process.env.PORT || '5000');
+app.set('port', port);
 
 //Init Body Parser
 app.use(express.json());
@@ -183,4 +198,4 @@ app.get('/api/clearresults', (req, res) => {
     });  
 });
 
-app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
+app.listen(port, () => console.log(`Server started on PORT ${port}`));
